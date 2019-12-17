@@ -9,6 +9,19 @@
         <script type="text/javascript" src="javascript/warenkorb.js"></script>
          <script type="text/javascript">
          
+         Array.prototype.remove = function() {
+        	 //Funktion zum entfernen von Elementen aus Arrays, https://stackoverflow.com/questions/3954438/how-to-remove-item-from-array-by-value/3955096#3955096
+        	 
+        	    var what, a = arguments, L = a.length, ax;
+        	    while (L && this.length) {
+        	        what = a[--L];
+        	        while ((ax = this.indexOf(what)) !== -1) {
+        	            this.splice(ax, 1);
+        	        }
+        	    }
+        	    return this;
+        	};
+        	
          function getWarenkorb(){
         	str_warenkorb = localStorage.getItem("warenkorb");
         	
@@ -48,7 +61,28 @@
         	updateWarenkorbGUI();
         }
 
-
+        function entferneAusWarenkorb(id){
+        	
+        	warenkorb = getWarenkorb();
+        	warenkorb.remove(id);
+        	
+        	str_warenkorb = "";
+        	
+        	if(warenkorb.length > 0){
+	        	warenkorb.forEach(function(item, index){
+	        		str_warenkorb = str_warenkorb  + item + ",";
+	    		});
+        	
+        		//letztes Komma entfernen    	
+        		str_warenkorb = str_warenkorb.substring(0, str_warenkorb.length-1);
+        	}
+        	
+        	
+        	localStorage.setItem("warenkorb", str_warenkorb)
+        	
+        	
+        	updateWarenkorbGUI();
+        }
         
         function updateWarenkorbHeader(){
           
@@ -126,18 +160,23 @@
     			$(id).show();
     		})      	
     	}
+   
     	
     	//login prüfen
-    	function pruefeLogin(){
+    	
+    	function benutzerIstAngemeldet(){
     		username = '<%=session.getAttribute("username")%>'
-    		
-    		if(username == null || username == ""){
-    			//alert("fdas");
-    			window.location.href="index.jsp";
-    			 
-    		}
+        		
+       		return !(username == null || username == "")
     	}
     	
+    	function pruefeLogin(){
+
+    		if(!benutzerIstAngemeldet()){
+    			//alert("fdas");
+    			window.location.href="index.jsp";
+    		}
+    	}
         </script>
         <script >
             $("document").ready(function()
@@ -212,9 +251,15 @@
 				      int n = rsmd.getColumnCount();
 				      while( rs.next() )
 				      {
-				        out.println( "</tr><tr class=\"trWarenkorb\" id=\"tr" + rs.getString( 1 ) + "\">" ); //id des Fahrrads im id-Attribut des tr-Elements speichern
+				    	String id = rs.getString( 1 );
+				        out.println( "</tr><tr class=\"trWarenkorb\" id=\"tr" + id + "\">" ); //id des Fahrrads im id-Attribut des tr-Elements speichern
 				        for( int i=2; i<=n; i++ )  // Bei 2 beginnen, da ID nicht angezeigt werden soll
 				          out.println( "<td>" + rs.getString( i ) + "</td>" );
+				        
+				        out.println(
+		                        "<td>" +
+		                        "<button id=\"btnRemove" + id + "\" onclick=\"entferneAusWarenkorb(\' " + id + " \')\">Aus Warenkorb entfernen</button>" +
+		            	    	"</td>" );
 				      }
 				    } finally {
 				      try { if( null != rs ) rs.close(); } catch( Exception ex ) {}

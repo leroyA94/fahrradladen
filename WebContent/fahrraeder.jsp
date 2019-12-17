@@ -10,6 +10,19 @@
         <script type="text/javascript" src="javascript/warenkorb.js"></script>
          <script type="text/javascript">
          
+         Array.prototype.remove = function() {
+        	 //Funktion zum entfernen von Elementen aus Arrays, https://stackoverflow.com/questions/3954438/how-to-remove-item-from-array-by-value/3955096#3955096
+        	 
+        	    var what, a = arguments, L = a.length, ax;
+        	    while (L && this.length) {
+        	        what = a[--L];
+        	        while ((ax = this.indexOf(what)) !== -1) {
+        	            this.splice(ax, 1);
+        	        }
+        	    }
+        	    return this;
+        	};
+        	
          function getWarenkorb(){
         	str_warenkorb = localStorage.getItem("warenkorb");
         	
@@ -49,7 +62,28 @@
         	updateWarenkorbGUI();
         }
 
-
+        function entferneAusWarenkorb(id){
+        	
+        	warenkorb = getWarenkorb();
+        	warenkorb.remove(id);
+        	
+        	str_warenkorb = "";
+        	
+        	if(warenkorb.length > 0){
+	        	warenkorb.forEach(function(item, index){
+	        		str_warenkorb = str_warenkorb  + item + ",";
+	    		});
+        	
+        		//letztes Komma entfernen    	
+        		str_warenkorb = str_warenkorb.substring(0, str_warenkorb.length-1);
+        	}
+        	
+        	
+        	localStorage.setItem("warenkorb", str_warenkorb)
+        	
+        	
+        	updateWarenkorbGUI();
+        }
         
         function updateWarenkorbHeader(){
           
