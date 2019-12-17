@@ -1,4 +1,4 @@
-#sudo mariadb
+/*#sudo mariadb*/
 
 CREATE DATABASE Fahrradladen;
 CREATE TABLE Fahrradladen.Fahrraeder (Id int NOT NULL AUTO_INCREMENT, Marke varchar(255), Groesse int NOT NULL, Preis DOUBLE NOT NULL, PRIMARY KEY (Id));
