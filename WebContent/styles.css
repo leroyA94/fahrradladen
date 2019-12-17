@@ -1,0 +1,20 @@
+header {background-color: blue;}
+body {color: blue;}
+h3 { text-decoration: underline;} 
+a:visited {background-color: green;}
+.navLink {background-color: aqua;}
+#navigation {
+    position: absolute;
+    width: 170px;
+    background-color: yellowgreen;
+}
+.content {margin-left: 190px;}
+.bottom {margin-left: 190px;margin-top: 20px; position: absolute; bottom: 10px; clear: left; clear: right}
+
+#imgVorstand {float: left; width: 20%}
+#pFormButtons {position: relative; left: 50px}
+
+#shoutbox {float: right; background-color:  blue; margin-right: 30; width: 20%}
+.shoutboxEntry {background-color: green};
+#shoutboxInput {}
+#shoutboxInfo {background-color: #00FF00};
