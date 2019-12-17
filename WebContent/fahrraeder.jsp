@@ -127,6 +127,23 @@
     			$(id).show();
     		})      	
     	}
+   
+    	
+    	//login prüfen
+    	
+    	function benutzerIstAngemeldet(){
+    		username = '<%=session.getAttribute("username")%>'
+        		
+       		return !(username == null || username == "")
+    	}
+    	
+    	function pruefeLogin(){
+
+    		if(!benutzerIstAngemeldet()){
+    			//alert("fdas");
+    			window.location.href="index.jsp";
+    		}
+    	}
         </script>
         
         <script >
@@ -134,32 +151,24 @@
             {
             	
             	window.addEventListener( "pageshow", function ( event ) {
-            		  var historyTraversal = event.persisted || 
-            		                         ( typeof window.performance != "undefined" && 
-            		                              window.performance.navigation.type === 2 );
-            		  if ( historyTraversal ) {
+            		//var historyTraversal = event.persisted || 
+            		  //                       ( typeof window.performance != "undefined" && 
+            		   //                           window.performance.navigation.type === 2 );
+            		  //if ( historyTraversal ) {
             		    // Handle page restore.
             		    updateWarenkorbGUI();
-            		  }
+            		  //}
+            		  
+            		  //login checken
+            		  pruefeLogin();
+            		  
             		});
 
             	
-            	updateWarenkorbGUI();
             	
-            	  $.ajax({
-          		    type: "PUT",
-          		    url: "resources/fahrrad",
-          		    dataType: "json",
-          		    success: function(){
-          		    	$(this).hide();
-          		    }
-          		 });
             	
             });
-            
-            
-            
-            
+                      
         </script>
     </head>
     <body>

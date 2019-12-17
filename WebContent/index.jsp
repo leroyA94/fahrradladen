@@ -13,6 +13,31 @@
         <script language="javascript" type="text/javascript" src="javascript/shoutbox.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">             
         </script>
+        <script >
+		   	function benutzerIstAngemeldet(){
+		   		username = '<%=session.getAttribute("username")%>'
+		       		
+		      		return !(username == null || username == "")
+		   	}
+        
+            $("document").ready(function()
+            {
+            	
+            	window.addEventListener( "pageshow", function ( event ) {
+
+            		if(benutzerIstAngemeldet()){
+            			//alert("fdas");
+            			window.location.href="fahrraeder.jsp";
+            		}
+            		  
+            	});
+
+            	
+            	
+            	
+            });
+                      
+        </script>
     </head>
     <body>
 

@@ -126,12 +126,37 @@
     			$(id).show();
     		})      	
     	}
+    	
+    	//login prüfen
+    	function pruefeLogin(){
+    		username = '<%=session.getAttribute("username")%>'
+    		
+    		if(username == null || username == ""){
+    			//alert("fdas");
+    			window.location.href="index.jsp";
+    			 
+    		}
+    	}
+    	
         </script>
         <script >
             $("document").ready(function()
             {
-            	updateWarenkorbGUI();
-            	//test();
+
+            	window.addEventListener( "pageshow", function ( event ) {
+            		//var historyTraversal = event.persisted || 
+            		  //                       ( typeof window.performance != "undefined" && 
+            		   //                           window.performance.navigation.type === 2 );
+            		  //if ( historyTraversal ) {
+            		    // Handle page restore.
+            		    updateWarenkorbGUI();
+            		  //}
+            		  
+            		  //login checken
+            		  pruefeLogin();
+
+            		});
+            	
 
             });
         </script>
