@@ -1,5 +1,6 @@
 package Model;
 
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -18,8 +19,10 @@ import javax.servlet.http.HttpServletRequest;
 public class Model {
     
     private static Model model;
-    private HashMap<Integer,FahrradBean> fahrraeder = new HashMap<>();
-    private int lastFahrradID = 1;
+    private String user   = "webapp";
+    private String pw = "test";
+    private String db = "Fahrradladen";
+    private String treiber = "org.mariadb.jdbc.Driver";
     
     private Model()
     {
@@ -32,10 +35,84 @@ public class Model {
             model = new Model();
         return (model);
     }
+      
     
-    
-    public HashMap<Integer,FahrradBean> getFahrraeder() {
-        return fahrraeder;
-    }
+    public String [] [] getDBResult(String tabelle, String spalten, String where){
+	      //String db_url = "jdbc:mysql://localhost/Fahrradladen";
+		  //String treiber = "com.mysql.jdbc.Driver";
+		
+		  //String treiber = "org.hsqldb.jdbcDriver";
+		  //String db_url = "jdbc:hsqldb:http://localhost/Fahrradladen";
+		  //String db_url = "jdbc:hsqldb:hsql:http://localhost/Fahrradladen";
 
+		  String table = db + "." + tabelle;
+		  String statement = "SELECT " + spalten + " FROM " + table + " WHERE " + where + ";";
+		  String statement_count = "SELECT COUNT(" + spalten + ") FROM " + table + " WHERE " + where + ";";
+		
+		
+
+	    Connection cn = null;
+	    Statement  st = null;
+	    ResultSet rs = null;
+		    
+		    int n_reihen, n_spalten;
+		  String [][] result = new String [0][0];
+		  
+		    
+		 	try {
+   	
+		      Class.forName( treiber );
+		      //Class.forName("org.mariadb.jdbc.Driver");
+		      
+		      //org.hsqldb.jdbcDriver.driverInstance();
+		      //cn = DriverManager.getConnection( db_url, user, pw );
+		      cn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/" + db + "?user=" + user + "&password=" +  pw );
+		      st = cn.createStatement();
+		      
+		      //Reihen-Anzahl ermitteln
+		      rs =  st.executeQuery( statement_count );
+				
+		      rs.next();
+		      n_reihen = rs.getInt( 1 );
+		      
+		      // Daten holen
+		      rs =  st.executeQuery( statement );
+			
+	
+		      ResultSetMetaData rsmd = rs.getMetaData();
+		      n_spalten = rsmd.getColumnCount();
+		      result = new String [n_reihen] [n_spalten];
+		      
+		      
+		      int i_reihe = -1;
+		      while( rs.next() )
+		      {
+		    	  i_reihe +=1 ;
+			       for( int i=1; i<=n_spalten; i++ )  
+			          result[i_reihe] [i-1] = rs.getString(i);
+		      }
+		    } catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+		      try { if( null != rs ) rs.close(); } catch( Exception ex ) {}
+		      try { if( null != st ) st.close(); } catch( Exception ex ) {}
+		      try { if( null != cn ) cn.close(); } catch( Exception ex ) {}
+		    }
+		 	
+		 	return result;
+    }
+    
+    public boolean pruefeLogin(String username, String pw){
+
+    	String [] [] userdata = getDBResult("Benutzer",
+    			"*", "Benutzername='" + username + "' AND Passwort='" + pw + "' ");
+    	
+    		return (userdata.length > 0);
+    	
+  }
+    
 }

@@ -188,7 +188,7 @@
 	                <th></th>
 	            </tr>
 	            <!--  
-	            <% //for(int i = 0; i < Model.Model.getInstance().getFahrraeder().size(); i++)
+	            % //for(int i = 0; i < Model.Model.getInstance().getFahrraeder().size(); i++)
 	            for(java.util.Map.Entry<Integer, FahrradBean> entry:Model.Model.getInstance().getFahrraeder().entrySet())
 	            {
 	                Model.FahrradBean b = entry.getValue();
@@ -203,7 +203,7 @@
 	                        "<td> <a href=\"/WebApplication1/Kontakt?index=" + b.getId() + "\">" + "</a></td>" +
 	                        "</tr>");
 	            }
-	            %> -->
+	            % -->
 	            <%@ page import="java.sql.*" isThreadSafe="false" %>
 				<%
 				

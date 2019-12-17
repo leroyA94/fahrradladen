@@ -45,9 +45,11 @@ public class LoginServlet extends HttpServlet {
 	    	String username = request.getParameter("username");
 	    	String pw = request.getParameter("pw");
 	    	
+	    	
+	    	
 	    	//Login-Daten prüfen 
 	    	//todo ersetzen durch echte prüfung
-	    	if(pw.equals("test")) {
+	    	if(Model.Model.getInstance().pruefeLogin(username, pw)) {
 	        	request.getSession().setAttribute("username", username);
 	        	   
 	         
