@@ -47,7 +47,7 @@ public class Model {
 
 		  String table = db + "." + tabelle;
 		  String statement = "SELECT " + spalten + " FROM " + table + " WHERE " + where + ";";
-		  String statement_count = "SELECT COUNT(" + spalten + ") FROM " + table + " WHERE " + where + ";";
+		  String statement_count = "SELECT COUNT(*) FROM " + table + " WHERE " + where + ";";
 		
 		
 
@@ -104,6 +104,33 @@ public class Model {
 		    }
 		 	
 		 	return result;
+    }
+    
+    public String getFahrradPreis(String id) {
+    	
+    	String [] [] dbResult = getDBResult("Fahrraeder", "Preis", "Id = '" + id +"'");
+    	
+    	if (dbResult.length == 0)
+    		return null;
+    	else
+    		return dbResult[0][0];
+    	
+    }
+    
+    public FahrradBean getFahrrad(String id) {
+    	
+    	String [] [] dbResult = getDBResult("Fahrraeder", "Marke, Groesse, Preis ", "Id = '" + id +"'");
+
+    	if (dbResult.length == 0)
+    		return null;
+    	else {
+    		FahrradBean bean = new FahrradBean();
+    		bean.setMarke(dbResult[0][0]);
+    		bean.setGroesse(Integer.parseInt(dbResult[0][1]));
+    		bean.setPreis(Double.parseDouble(dbResult[0][2]));
+    		return bean;
+    	}
+    	
     }
     
     public boolean pruefeLogin(String username, String pw){
