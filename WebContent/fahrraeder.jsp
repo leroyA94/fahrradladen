@@ -132,6 +132,9 @@
         	
         	//Buttons 
         	aktualisiereButtons();
+        	
+        	//Gesamtpreis
+        	$("#td_warenkorb_gesamt").html("Gesamtpreis: " + getWarenkorbPreis());
 
         }
         
@@ -150,21 +153,12 @@
     	
     	//deaktiviert/aktiviert Buttons anhand des Warenkorbs
     	function aktualisiereWarenkorbTabelle(){
-    		/*
-    		$(".trWarenkorb").hide();
-    		
-    		warenkorb = getWarenkorb();
-    		
-    		warenkorb.forEach(function(item, index){
-    			id = "#tr" + $.trim(item)
-    			$(id).show();
-    		})    
-    		*/
+
     		
     		// AJAX kurz auf synchron stellen, kann sonst zu Problemen beim füllen der Tabelle führen
-        	//$.ajaxSetup({
-        	//    async: false
-        	//});
+        	$.ajaxSetup({
+              async: false
+        	});
 
     		warenkorb = getWarenkorb(); //hole warenkorb
         	$("#warenkorb_header").parent().children(".trWarenkorb").remove(); //leere Warenkorb-Tabelle
@@ -192,7 +186,7 @@
 		                        "<button id=\"btnRemove" + id + "\" onclick=\"entferneAusWarenkorb(\'" + id + "\')\">Aus Warenkorb entfernen</button>" +
 		            	    	"</td></tr>" ;
 	                		
-				        	$("#tblWarenkorb").append(fahrrad_html);
+				        	$("#tr_warenkorb_gesamt").before(fahrrad_html);
 
 		                           
 		                      
@@ -201,9 +195,43 @@
     		});
     		
     		// AJAX kurz auf synchron stellen, kann sonst zu Problemen beim füllen der Tabelle führen
-    		//$.ajaxSetup({
-    		//    async: true
-    		//});
+    		$.ajaxSetup({
+    		    async: true
+    		});   		
+    		
+    		
+
+    	}
+    	
+    	function getWarenkorbPreis(){
+    		// AJAX temporär auf synchron stellen
+        	$.ajaxSetup({
+        	    async: false
+        	});
+
+    		warenkorb = getWarenkorb(); //hole warenkorb
+  			warenkorb_preis = 0.0;
+    		
+    		//iteriere durch den Warenkorb
+    		$.each(warenkorb, function(index, item) {
+    			//hole für jedes Item die Daten
+                $.getJSON("Fahrrad?id=" + item + "&attribut=preis",
+                        function(obj)
+                        {	
+                	warenkorb_preis = warenkorb_preis + parseFloat(obj);
+
+		                           
+		                      
+                        }
+                );
+    		});
+    		
+    		// AJAX temporär auf synchron stellen
+    		$.ajaxSetup({
+    		    async: true
+    		});
+    		
+    		return warenkorb_preis;
 
     	}
     	
@@ -226,7 +254,6 @@
     		}
     	}
         </script>
-        
         <script >
             $("document").ready(function()
             {

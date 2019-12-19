@@ -33,15 +33,22 @@ public class FahrradServlet extends HttpServlet {
     	String id = request.getParameter("id");
     	String attribut = request.getParameter("attribut");
     	
-
-    	
-		FahrradBean f = Model.Model.getInstance().getFahrrad(id); //Model.Model.getInstance().getFahrradPreis(id);
-		String json = new Gson().toJson(f);
-		
     	response.setContentType("text/plain");  
 		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(json);
+    	
+		String result;
 		
+    	if(attribut == null) {  
+    		FahrradBean f = Model.Model.getInstance().getFahrrad(id); //Model.Model.getInstance().getFahrradPreis(id);	  		
+			result = new Gson().toJson(f);
+		
+    	}else if (attribut.equals("preis")) {
+    		result = Model.Model.getInstance().getFahrradPreis(id);
+    	} else
+    		result = "";
+    	
+    	response.getWriter().write(result);
+    	
 		/*
 		
     	if (attribut == null) {
