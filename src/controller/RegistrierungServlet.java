@@ -45,30 +45,31 @@ public class RegistrierungServlet extends HttpServlet {
 		matcher = pattern.matcher(mail);
 		if (!(matcher.matches()))
 			fehler = 1;//;
-		/*
-		// passwort prüfen
-		pattern = Pattern.compile(
-				"\"^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$\"");
-		matcher = pattern.matcher(passwort);
-		if (!(matcher.matches()))
-			fehler = 2;//;
-		*/
-		// name prüfen
-		else if(name.length() < 2 || name.length() > 50)
-			fehler = 3;//;
-		
-		// vorname prüfen
-		else if(vorname.length() < 2 || vorname.length() > 50)
-			fehler = 4;//;
-		
-		// prüfen, ob benutzer schon existiert
-		else if (Model.Model.getInstance().pruefeBenutzerExistiert(mail)) {
-			fehler = 5;
-		}// registrieren
-		else if (!Model.Model.getInstance().registriereBenutzer(mail, name, vorname, passwort)) {
-			fehler = 6;
+		else {
+			// passwort prüfen
+			pattern = Pattern.compile(
+					"^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{8,}$",
+					Pattern.CASE_INSENSITIVE);
+			matcher = pattern.matcher(passwort);
+			if (!(matcher.matches()))
+				fehler = 2;//;
+			
+			// name prüfen
+			else if(name.length() < 2 || name.length() > 50)
+				fehler = 3;//;
+			
+			// vorname prüfen
+			else if(vorname.length() < 2 || vorname.length() > 50)
+				fehler = 4;//;
+			
+			// prüfen, ob benutzer schon existiert
+			else if (Model.Model.getInstance().pruefeBenutzerExistiert(mail)) {
+				fehler = 5;
+			}// registrieren
+			else if (!Model.Model.getInstance().registriereBenutzer(mail, name, vorname, passwort)) {
+				fehler = 6;
+			}
 		}
-		
 		// Antwort
         //Weiterleitung an Fahrrad-Seite
         RequestDispatcher disp = request.getRequestDispatcher("/registrierung.jsp?error=" + fehler);

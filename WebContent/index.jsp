@@ -53,6 +53,9 @@
             </p>
 
         </form>  
+        <p>
+        Neu hier? Dann geht es <a href="registrierung.jsp" >hier zur Registrierung.</a>
+        </p>
 
         <%@ include file="footer.jsp" %> 
 

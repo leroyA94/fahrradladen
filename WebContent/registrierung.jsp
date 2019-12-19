@@ -50,11 +50,11 @@
 			}else if (Integer.parseInt(error) == 1) { //fehler
 				out.print("Ungültige E-Mail-Adresse!");
 			}else if (Integer.parseInt(error) == 2) { //fehler
-				out.print("Ungültiges Passwort! Das Passwort muss min. acht Zeichen lang sein und einen Buchstaben sowie eine Zahl enthalten.");
+				out.print("Ungültiges Passwort! Das Passwort darf keine Leerzeichen enthalten und muss min. acht Zeichen lang sein und einen Buchstaben sowie eine Zahl enthalten.");
 			}else if (Integer.parseInt(error) == 3) { //fehler
-				out.print("Der Name darf nur zwischen 2 und 50 Zeichen enthalten.");
+				out.print("Der Name muss zwischen 2 und 50 Zeichen enthalten.");
 			}else if (Integer.parseInt(error) == 4) { //fehler
-				out.print("Der Vorname darf nur zwischen 2 und 50 Zeichen enthalten.");
+				out.print("Der Vorname muss zwischen 2 und 50 Zeichen enthalten.");
 			}else if (Integer.parseInt(error) == 5) { //fehler
 				out.print("Es ist bereits ein Benutzer mit dieser Mail-Adresse registriert.");
 			}else if (Integer.parseInt(error) == 6) { //fehler
