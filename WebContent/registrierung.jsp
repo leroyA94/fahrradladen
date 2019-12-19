@@ -1,7 +1,4 @@
-<%-- 
-    Document   : newjsp
-    Created on : 25.06.2015, 23:50:15
---%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -41,18 +38,63 @@
     </head>
     <body>
 
-		<h1> Wilkommen bei Fahrradladen GmbH</h1>
-  		<form method="GET" action="Login" class="content">
-            <fieldset>
-                <legend>Login</legend>
-                E-Mail-Adresse: <input name="username" type="text" size="20" required="required"/></br>
-                Passwort: <input name="pw" type="password" size="20" required="required"/></br>
-            </fieldset>
-            <p id="pFormButtons">
-                <input type="submit" value="Einloggen"/>
-            </p>
-
-        </form>  
+		<h1> Registrierung</h1>
+		
+		<%
+			String error = request.getParameter("error");
+			if(error == null){ //normaler Aufruf der Seite 
+				//nichts
+			}else if (Integer.parseInt(error) == 0) { //registrierung erfolgreich
+				out.print("Die Registrierung war erfolgreich!. Willkommen! ");
+				out.print("<a href=\"index.jsp\">Zurück zum Login.</a>");
+			}else if (Integer.parseInt(error) == 1) { //fehler
+				out.print("Ungültige E-Mail-Adresse!");
+			}else if (Integer.parseInt(error) == 2) { //fehler
+				out.print("Ungültiges Passwort! Das Passwort muss min. acht Zeichen lang sein und einen Buchstaben sowie eine Zahl enthalten.");
+			}else if (Integer.parseInt(error) == 3) { //fehler
+				out.print("Der Name darf nur zwischen 2 und 50 Zeichen enthalten.");
+			}else if (Integer.parseInt(error) == 4) { //fehler
+				out.print("Der Vorname darf nur zwischen 2 und 50 Zeichen enthalten.");
+			}else if (Integer.parseInt(error) == 5) { //fehler
+				out.print("Es ist bereits ein Benutzer mit dieser Mail-Adresse registriert.");
+			}else if (Integer.parseInt(error) == 6) { //fehler
+				out.print("Es ist ein unbekannter SQL-Fehler aufgetreten.");
+			}else { //fehler
+				out.print("Es ist ein unbekannter Fehler aufgetreten.");
+			}
+		%>
+		
+		<%
+		String name = request.getParameter("name");
+		String vorname = request.getParameter("vorname");
+		String mail = request.getParameter("mail");
+		if(name == null)
+			name = "";
+		if(vorname == null)
+			vorname ="";
+		if(mail==null)
+			mail="";
+			
+			if(error == null || Integer.parseInt(error) > 0){ //normaler Aufruf der Seite oder Fehler
+				out.print(
+				  		"<form method=\"GET\" action=\"Registrierung\" class=\"content\">" +
+			            "<fieldset>" +
+			            "   <legend>Login</legend>" +
+			            "    Name: <input name=\"name\" type=\"text\" size=\"20\" required=\"required\" value=\"" + name + "\"></input></br>" +
+			            "    Vorname: <input name=\"vorname\" type=\"text\" size=\"20\" required=\"required\" value=\"" + vorname + "\"></input></br>" +
+			            "    E-Mail-Adresse: <input name=\"mail\" type=\"text\" size=\"20\" required=\"required\" value=\"" + mail + "\"></input></br>" +
+			            "    Passwort: <input name=\"pw\" type=\"password\" size=\"20\" required=\"required\"></input></br>" +
+			            "</fieldset>" +
+			            "<p >" +
+			            "    <input type=\"submit\" value=\"Registrieren\"/>" +
+			            "</p>" +
+						"" +
+			        	"</form>" 
+						);
+			}
+			
+		%>
+  
 
         <%@ include file="footer.jsp" %> 
 

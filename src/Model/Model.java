@@ -36,6 +36,40 @@ public class Model {
         return (model);
     }
       
+    private boolean executeOnDB(String statement) {
+
+	
+
+    Connection cn = null;
+    Statement  st = null;
+    ResultSet rs = null;
+    boolean successfull = false;
+    
+	 	try {
+	
+	      Class.forName( treiber );
+	      cn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/" + db + "?user=" + user + "&password=" +  pw );
+	      st = cn.createStatement();
+
+	      // ausführen
+	      rs =  st.executeQuery( statement );
+
+	      successfull = true;
+	      
+	    } catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+	      try { if( null != rs ) rs.close(); } catch( Exception ex ) {}
+	      try { if( null != st ) st.close(); } catch( Exception ex ) {}
+	      try { if( null != cn ) cn.close(); } catch( Exception ex ) {}
+	    }
+	 	
+	 	return successfull;
+    }
     
     public String [] [] getDBResult(String tabelle, String spalten, String where){
 	      //String db_url = "jdbc:mysql://localhost/Fahrradladen";
@@ -141,6 +175,21 @@ public class Model {
     	
     		return (userdata.length > 0);
     	
-  }
+     }
+    
+    public boolean pruefeBenutzerExistiert(String username) {
+    	String [] [] userdata = getDBResult("Benutzer",
+    			"*", "Benutzername='" + username + "'");
+    	
+    		return (userdata.length > 0);
+    }
+    
+    public boolean registriereBenutzer(String username, String name, String vorname, String pw) {
+
+    	return executeOnDB("INSERT INTO Fahrradladen.Benutzer (Benutzername, Name, Vorname , Passwort) VALUES (\"" + username + "\", \"" + name + "\", \"" + vorname + "\",\"" + pw +"\");");
+    	
+    }
+    
+    
     
 }

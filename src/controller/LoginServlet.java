@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -50,6 +52,8 @@ public class LoginServlet extends HttpServlet {
 	    	//Login-Daten prüfen 
 	    	//todo ersetzen durch echte prüfung
 	    	if(Model.Model.getInstance().pruefeLogin(username, pw)) {
+	    		
+
 	        	request.getSession().setAttribute("username", username);
 	        	   
 	         

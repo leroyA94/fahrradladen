@@ -13,9 +13,7 @@ import com.google.gson.Gson;
 
 import Model.FahrradBean;
 
-/**
- * Servlet implementation class LoginServlet
- */
+
 @WebServlet("/Fahrrad")
 public class FahrradServlet extends HttpServlet {
 	   /**
@@ -48,17 +46,7 @@ public class FahrradServlet extends HttpServlet {
     		result = "";
     	
     	response.getWriter().write(result);
-    	
-		/*
-		
-    	if (attribut == null) {
-    		
-		else if	 (attribut == )
-    		
-    	}
-		     
-            */
-        
+    	       
         
        
     }
