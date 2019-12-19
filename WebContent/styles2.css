@@ -2,15 +2,26 @@ header {}
 body {}
 h3 { text-decoration: underline;} 
 a:visited {}
-.navLink {}
+.navLink {
+	
+   
+}
 #navigation {
     position: absolute;
     width: 170px;
-    
+    height: 100%;
     background-color: lightgray;
 }
-.content {margin-left: 190px;}
-.top {margin-left: 190px;}
+
+.navContent {
+	 margin-top:30px;
+}
+
+.content {margin-left: 190px;
+margin-top:30px;}
+.top {
+
+    background-color: lightgray;}
 .bottom {margin-left: 190px;margin-top: 20px; position: absolute; bottom: 10px; clear: left; clear: right}
 
 #imgVorstand {float: left; width: 20%}
