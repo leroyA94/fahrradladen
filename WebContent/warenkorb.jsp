@@ -42,7 +42,7 @@
          }
          
         function packeInWarenkorb(id){
-        	
+        	id = id.trim();
         	str_warenkorb = localStorage.getItem("warenkorb");
 
         	if(str_warenkorb == null || str_warenkorb == "")
