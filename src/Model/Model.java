@@ -196,11 +196,20 @@ public class Model {
     	
     }
     
-    public boolean pruefeFahrradIstVerliehen(int id) {
-    	String [] [] userdata = getDBResult("Verleihe",
-    			"*", "fahrradId='" + id + "'");
+    public boolean entferneVerleih( int fahrradId, int benutzerId) {
+
+    	return executeOnDB("DELETE FROM Fahrradladen.Verleihe WHERE fahrradId=" + fahrradId + " AND benutzerId=" + benutzerId + ";");
     	
-    		return (userdata.length > 0);
+    }
+    
+    public int pruefeFahrradIstVerliehenAn(int id) {
+    	String [] [] data = getDBResult("Verleihe",
+    			"benutzerId", "fahrradId='" + id + "'");
+    	
+    	if(data.length == 0)
+    		return 0;
+    	else
+    		return Integer.parseInt(data[0][0]);
     }
     
     

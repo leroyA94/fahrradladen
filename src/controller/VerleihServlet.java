@@ -34,28 +34,55 @@ public class VerleihServlet extends HttpServlet {
 		
 		String fahrradId = request.getParameter("fahrrad");
 		String benutzerId = request.getParameter("benutzer");
+		String entfernen = request.getParameter("entfernen");
 
-		if(benutzerId == null) {
+		int fahrradIstVerliehenAn = Model.getInstance().pruefeFahrradIstVerliehenAn(Integer.parseInt(fahrradId));
+		
+		if(benutzerId == null && (entfernen == null || entfernen == "0")) {
 			//wenn nur fahrrad angegeben ist 
 			//-> prüfe ob fahrrad verliehen ist		
 
-			boolean result = Model.getInstance().pruefeFahrradIstVerliehen(Integer.parseInt(fahrradId));
+			int result = fahrradIstVerliehenAn;
 			
 	    	response.setContentType("text/plain");  
-			response.setCharacterEncoding("UTF-8");
+			response.setCharacterEncoding("UTF-8");   		 
+	    	response.getWriter().write(String.valueOf(result));
 	    	
-	    	
-	    	response.getWriter().write(result?"1":"0");
-	    	
-		}else {
-			//sonst leihe Fahrrad aus
-			Model.getInstance().erzeugeVerleih(
-					Integer.parseInt(fahrradId), Integer.parseInt(benutzerId));
+		}else if (entfernen == null || entfernen == "0") {
 			
-	        //Weiterleitung an Fahrrad-Seite
-	        RequestDispatcher disp = request.getRequestDispatcher("/fahrraeder.jsp");
-	        disp.forward(request, response);
+			if (fahrradIstVerliehenAn > 0) {
+				//ist bereits verliehen
+				//todo
+			}else {
+				//leihe Fahrrad aus
+				boolean result = Model.getInstance().erzeugeVerleih(
+						Integer.parseInt(fahrradId), Integer.parseInt(benutzerId));
+				
+		        //Weiterleitung an Fahrrad-Seite
+		        RequestDispatcher disp = request.getRequestDispatcher("/fahrraeder.jsp");
+		        disp.forward(request, response);
+			}
+						
+		}else if (entfernen.equals("1")) {
+			
+			boolean result;
+			if (fahrradIstVerliehenAn == Integer.parseInt(benutzerId)) {
+				//Lösche verleih
+				 result = Model.getInstance().entferneVerleih(Integer.parseInt(fahrradId),
+						Integer.parseInt(benutzerId));
+				
+
+			}else {
+				//zu löschender Verleih existiert nicht
+				result = false;
+			}
+			
+	    	response.setContentType("text/plain");  
+			response.setCharacterEncoding("UTF-8");   		 
+	    	response.getWriter().write(result?"1":"0");        
+		
 		}
+			
 		
 	}
 
