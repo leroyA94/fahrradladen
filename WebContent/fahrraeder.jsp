@@ -236,7 +236,25 @@
     	}
     	
    
-   
+    	function leiheArtikelAus(){
+    		// leiht alle Artikel im Warenkorb aus
+    		//todo Fall, in dem zwischenzeiltich ein anderer User ausgeliehen hat
+    		//todo Fehlgeschlagener Verleih
+    		
+    		warenkorb = getWarenkorb(); //hole warenkorb
+    		
+    		
+    		//iteriere durch den Warenkorb
+    		$.each(warenkorb, function(index, item) {
+    			//hole für jedes Item die Daten
+                $.getJSON("Verleih?fahrrad=" + item + "&aktion=ausleihen",
+                        function(obj)
+                        {}
+                );
+    		});
+    		
+    		leereWarenkorb();
+    	}
     	
     	//login prüfen
     	
@@ -324,7 +342,10 @@
 				  String user   = "webapp";
 				  String pw = "test";
 				  String table = "Fahrradladen.Fahrraeder";
-				  String statement = "SELECT Id, Marke, Groesse, Preis FROM " + table + ";";
+				  String statement = "SELECT Id, Marke, Groesse, Preis FROM " + table + 
+						  " LEFT JOIN Fahrradladen.Verleihe " + 
+						  " ON Fahrradladen.Fahrraeder.Id = Fahrradladen.Verleihe.fahrradId " + 
+						  " WHERE Fahrradladen.Verleihe.benutzerId IS NULL ";
 				
 				
 
