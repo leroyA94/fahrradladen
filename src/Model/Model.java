@@ -168,12 +168,15 @@ public class Model {
     	
     }
     
-    public boolean pruefeLogin(String username, String pw){
+    public int pruefeLogin(String username, String pw){
 
     	String [] [] userdata = getDBResult("Benutzer",
-    			"*", "Benutzername='" + username + "' AND Passwort='" + pw + "' ");
+    			"Id", "Benutzername='" + username + "' AND Passwort='" + pw + "' ");
     	
-    		return (userdata.length > 0);
+    	if(userdata.length == 0)
+    		return 0;
+    	else    	
+    		return Integer.parseInt(userdata[0][0]);
     	
      }
     

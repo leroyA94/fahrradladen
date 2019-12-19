@@ -234,6 +234,26 @@
 
     	}
     	
+
+    	function leiheArtikelAus(){
+    		// leiht alle Artikel im Warenkorb aus
+    		//todo Fall, in dem zwischenzeiltich ein anderer User ausgeliehen hat
+    		//todo Fehlgeschlagener Verleih
+    		
+    		warenkorb = getWarenkorb(); //hole warenkorb
+    		
+    		
+    		//iteriere durch den Warenkorb
+    		$.each(warenkorb, function(index, item) {
+    			//hole für jedes Item die Daten
+                $.getJSON("Verleih?fahrrad=" + item + "&aktion=ausleihen",
+                        function(obj)
+                        {}
+                );
+    		});
+    		
+    		leereWarenkorb();
+    	}
    
    
     	
@@ -349,6 +369,7 @@
 				<td id="td_warenkorb_gesamt" colspan=5 />
 			</tr>
 		</table>
+		<button onclick="leiheArtikelAus()">Ausleihen</button>
 		<button onclick="leereWarenkorb()">Warenkorb leeren</button>
 	</div>
 

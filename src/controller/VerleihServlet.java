@@ -33,12 +33,13 @@ public class VerleihServlet extends HttpServlet {
 		
 		
 		String fahrradId = request.getParameter("fahrrad");
-		String benutzerId = request.getParameter("benutzer");
-		String entfernen = request.getParameter("entfernen");
+		String aktion = request.getParameter("aktion");
 
+		int benutzerId = Integer.parseInt(request.getSession().getAttribute("benutzerid").toString());
+		
 		int fahrradIstVerliehenAn = Model.getInstance().pruefeFahrradIstVerliehenAn(Integer.parseInt(fahrradId));
 		
-		if(benutzerId == null && (entfernen == null || entfernen == "0")) {
+		if(aktion==null || aktion.equals("")) {
 			//wenn nur fahrrad angegeben ist 
 			//-> prüfe ob fahrrad verliehen ist		
 
@@ -48,7 +49,7 @@ public class VerleihServlet extends HttpServlet {
 			response.setCharacterEncoding("UTF-8");   		 
 	    	response.getWriter().write(String.valueOf(result));
 	    	
-		}else if (entfernen == null || entfernen == "0") {
+		}else if (aktion.equals("ausleihen")) {
 			
 			if (fahrradIstVerliehenAn > 0) {
 				//ist bereits verliehen
@@ -56,20 +57,20 @@ public class VerleihServlet extends HttpServlet {
 			}else {
 				//leihe Fahrrad aus
 				boolean result = Model.getInstance().erzeugeVerleih(
-						Integer.parseInt(fahrradId), Integer.parseInt(benutzerId));
+						Integer.parseInt(fahrradId), (benutzerId));
 				
 		        //Weiterleitung an Fahrrad-Seite
 		        RequestDispatcher disp = request.getRequestDispatcher("/fahrraeder.jsp");
 		        disp.forward(request, response);
 			}
 						
-		}else if (entfernen.equals("1")) {
+		}else if (aktion.equals("entfernen")) {
 			
 			boolean result;
-			if (fahrradIstVerliehenAn == Integer.parseInt(benutzerId)) {
+			if (fahrradIstVerliehenAn == (benutzerId)) {
 				//Lösche verleih
 				 result = Model.getInstance().entferneVerleih(Integer.parseInt(fahrradId),
-						Integer.parseInt(benutzerId));
+						(benutzerId));
 				
 
 			}else {

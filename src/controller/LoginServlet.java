@@ -47,14 +47,15 @@ public class LoginServlet extends HttpServlet {
 	    	String username = request.getParameter("username");
 	    	String pw = request.getParameter("pw");
 	    	
-	    	
+	    	int userid = Model.Model.getInstance().pruefeLogin(username, pw);
 	    	
 	    	//Login-Daten prüfen 
 	    	//todo ersetzen durch echte prüfung
-	    	if(Model.Model.getInstance().pruefeLogin(username, pw)) {
+	    	if(userid > 0) {
 	    		
 
 	        	request.getSession().setAttribute("username", username);
+	        	request.getSession().setAttribute("benutzerid", userid);
 	        	   
 	         
 	            //Weiterleitung an Fahrrad-Seite
