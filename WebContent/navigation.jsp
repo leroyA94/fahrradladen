@@ -7,4 +7,5 @@
 <nav id="navigation">
     <a href="fahrraeder.jsp" class="navLink">Unserer Fahrräder</a><br/>
     <a href="warenkorb.jsp" class="navLink">Warenkorb</a>
+    <a href="verleihe.jsp" class="navLink">Ausgeliehenen</a>
 </nav>
