@@ -70,8 +70,8 @@ public class RegistrierungServlet extends HttpServlet {
 				fehler = 6;
 			}
 		}
-		// Antwort
-        //Weiterleitung an Fahrrad-Seite
+
+        //Neu laden
         RequestDispatcher disp = request.getRequestDispatcher("/registrierung.jsp?error=" + fehler);
         disp.forward(request, response);
 

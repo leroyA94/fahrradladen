@@ -190,6 +190,19 @@ public class Model {
     	
     }
     
+    public boolean erzeugeVerleih( int fahrradId, int benutzerId) {
+
+    	return executeOnDB("INSERT INTO Fahrradladen.Verleihe (fahrradId, benutzerId) VALUES (\"" + fahrradId + "\", \"" + benutzerId + "\");");
+    	
+    }
+    
+    public boolean pruefeFahrradIstVerliehen(int id) {
+    	String [] [] userdata = getDBResult("Verleihe",
+    			"*", "fahrradId='" + id + "'");
+    	
+    		return (userdata.length > 0);
+    }
+    
     
     
 }
