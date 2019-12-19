@@ -125,6 +125,7 @@ public class Model {
     		return null;
     	else {
     		FahrradBean bean = new FahrradBean();
+    		bean.setId(Integer.parseInt(id));
     		bean.setMarke(dbResult[0][0]);
     		bean.setGroesse(Integer.parseInt(dbResult[0][1]));
     		bean.setPreis(Double.parseDouble(dbResult[0][2]));

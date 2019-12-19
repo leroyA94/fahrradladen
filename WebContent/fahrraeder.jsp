@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="/WebApplication1/styles.css">
         <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
         <script type="text/javascript" src="javascript/warenkorb.js"></script>
-         <script type="text/javascript">
+<script type="text/javascript">
          
          Array.prototype.remove = function() {
         	 //Funktion zum entfernen von Elementen aus Arrays, https://stackoverflow.com/questions/3954438/how-to-remove-item-from-array-by-value/3955096#3955096
@@ -25,7 +25,6 @@
         	
          function getWarenkorb(){
         	str_warenkorb = localStorage.getItem("warenkorb");
-        	
         	
         	if(str_warenkorb == null || str_warenkorb == "")
         		arr_warenkorb = [];
@@ -46,7 +45,7 @@
         function packeInWarenkorb(id){
         	
         	str_warenkorb = localStorage.getItem("warenkorb");
-        	
+
         	if(str_warenkorb == null || str_warenkorb == "")
         		str_warenkorb = id;
         	else
@@ -151,7 +150,7 @@
     	
     	//deaktiviert/aktiviert Buttons anhand des Warenkorbs
     	function aktualisiereWarenkorbTabelle(){
-    		
+    		/*
     		$(".trWarenkorb").hide();
     		
     		warenkorb = getWarenkorb();
@@ -159,8 +158,56 @@
     		warenkorb.forEach(function(item, index){
     			id = "#tr" + $.trim(item)
     			$(id).show();
-    		})      	
+    		})    
+    		*/
+    		
+    		// AJAX kurz auf synchron stellen, kann sonst zu Problemen beim füllen der Tabelle führen
+        	//$.ajaxSetup({
+        	//    async: false
+        	//});
+
+    		warenkorb = getWarenkorb(); //hole warenkorb
+        	$("#warenkorb_header").parent().children(".trWarenkorb").remove(); //leere Warenkorb-Tabelle
+    		//$("#tblWarenkorb").append //bei dieser Variante funktioniert der Code nicht zuverlässig
+        	
+        	//alert("anzahl "+ warenkorb.length);
+    		//iteriere durch den Warenkorb
+    		$.each(warenkorb, function(index, item) {
+    			//hole für jedes Item die Daten
+                $.getJSON("Fahrrad?id=" + item,
+                        function(obj)
+                        {	
+                			//HTML für ein Fahrrad zusammensetzen
+                	
+                			id = obj.id;
+                			fahrrad_html = ( "<tr class=\"trWarenkorb\" id=\"tr" + id + "\">" ); //id des Fahrrads im id-Attribut des tr-Elements speichern
+
+                			//Attribute
+                			fahrrad_html = fahrrad_html + "<td>" + obj.marke + "</td>" ;
+                			fahrrad_html = fahrrad_html + "<td>" + obj.groesse + "</td>" ;
+                			fahrrad_html = fahrrad_html + "<td>" + obj.preis + "</td>" ;
+
+                			//Button
+		                	fahrrad_html = fahrrad_html +  "<td>" +
+		                        "<button id=\"btnRemove" + id + "\" onclick=\"entferneAusWarenkorb(\'" + id + "\')\">Aus Warenkorb entfernen</button>" +
+		            	    	"</td></tr>" ;
+	                		
+				        	$("#tblWarenkorb").append(fahrrad_html);
+
+		                           
+		                      
+                        }
+                );
+    		});
+    		
+    		// AJAX kurz auf synchron stellen, kann sonst zu Problemen beim füllen der Tabelle führen
+    		//$.ajaxSetup({
+    		//    async: true
+    		//});
+
     	}
+    	
+   
    
     	
     	//login prüfen
