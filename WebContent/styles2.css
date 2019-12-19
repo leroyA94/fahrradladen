@@ -1,0 +1,16 @@
+header {}
+body {}
+h3 { text-decoration: underline;} 
+a:visited {}
+.navLink {}
+#navigation {
+    position: absolute;
+    width: 170px;
+    
+    background-color: lightgray;
+}
+.content {margin-left: 190px;}
+.top {margin-left: 190px;}
+.bottom {margin-left: 190px;margin-top: 20px; position: absolute; bottom: 10px; clear: left; clear: right}
+
+#imgVorstand {float: left; width: 20%}

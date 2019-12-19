@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>JSP Page</title>
-<link rel="stylesheet" href="/WebApplication1/styles.css">
+<link rel="stylesheet" href="styles2.css">
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="javascript/warenkorb.js"></script>
 <script type="text/javascript">
@@ -298,9 +298,11 @@
 <body>
 	<%@include file="/header.jsp"%>
 
+    <%@ include file="navigation.jsp" %> 
+   
 	<div class="content">
 		<p id="pWarenkorbLeer">Ihr Warenkorb enthält noch keine Artikel.</p>
-		<table id="tblWarenkorb" class="content" border="1" cellpadding="3">
+		<table id="tblWarenkorb"  border="1" cellpadding="3">
 			<tr>
 				<th colspan="5">Folgende Artikel befinden sich in Ihrem
 					Warenkorb:</th>

@@ -17,6 +17,7 @@ CREATE TABLE Fahrradladen.Benutzer (Id int NOT NULL AUTO_INCREMENT, Benutzername
 
 INSERT INTO Fahrradladen.Benutzer (Benutzername, Name, Vorname , Passwort) VALUES ("t", "TestName", "TestVorname","test");
 INSERT INTO Fahrradladen.Benutzer (Benutzername, Name, Vorname , Passwort) VALUES ("linux", "Torvalds", "Linus","tl");
+INSERT INTO Fahrradladen.Benutzer (Benutzername, Name, Vorname , Passwort) VALUES ("admin", "admin", "admin","admin");
 
 
 

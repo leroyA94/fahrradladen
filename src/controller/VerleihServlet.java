@@ -66,21 +66,32 @@ public class VerleihServlet extends HttpServlet {
 						
 		}else if (aktion.equals("entfernen")) {
 			
-			boolean result;
-			if (fahrradIstVerliehenAn == (benutzerId)) {
-				//Lösche verleih
-				 result = Model.getInstance().entferneVerleih(Integer.parseInt(fahrradId),
-						(benutzerId));
+
+			String benutzername = request.getSession().getAttribute("username").toString();
+			
+			if(benutzername.equals("admin")) { //nur der Admin darf Fahrräder als zurückgegeben kennzeichnen
+				
+				boolean result;
 				
 
-			}else {
-				//zu löschender Verleih existiert nicht
-				result = false;
+				benutzerId = Integer.parseInt(request.getParameter("benutzer"));
+				
+				if (fahrradIstVerliehenAn == (benutzerId)) {
+					//Lösche verleih
+					 result = Model.getInstance().entferneVerleih(Integer.parseInt(fahrradId),
+							(benutzerId));					
+
+				}else {
+					//zu löschender Verleih existiert nicht
+					result = false;
+				}
+				
+		    	response.setContentType("text/plain");  
+				response.setCharacterEncoding("UTF-8");   		 
+		    	response.getWriter().write(result?"1":"0");  
+				
 			}
-			
-	    	response.setContentType("text/plain");  
-			response.setCharacterEncoding("UTF-8");   		 
-	    	response.getWriter().write(result?"1":"0");        
+      
 		
 		}
 			
