@@ -305,14 +305,16 @@
         <div class="content" id="div_background">
 	        <table border="1" cellpadding="3" cellspacing=0>
 	            <tr id="header1">
-	                <th  colspan="3">Unsere Fahrräder</th>
+	                <th  colspan="5">Unsere Fahrräder</th>
 	            </tr>
+	            <tr>
+					<td colspan="5"></td>
+				</tr>
 	            <tr>
 	                <th></th>
 	                <th>Marke</th>
 	                <th>Größe</th>
 	                <th>Preis</th>
-	                <th></th>
 	                <th></th>
 	            </tr>
 	            <!--  

@@ -1,5 +1,5 @@
 <header class="top"> 
-    Benutzer: ${sessionScope.username}
+    Benutzer: <a href="account.jsp" class="navLink">${sessionScope.username}</a>
 	<form method="GET" action="Logout">	 
 	        <button type="submit" value="logout">Ausloggen </button>	
 	</form>  
