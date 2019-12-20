@@ -7,8 +7,9 @@
 <nav id="navigation">
 <p class="navContent">
     <a href="fahrraeder.jsp" class="navLink">Unserer Fahrräder</a><br/>
-    <a href="warenkorb.jsp" class="navLink">Warenkorb</a>
-    <a href="verleihe.jsp" class="navLink">Ausgeliehenen</a>
-    <a href="account.jsp" class="navLink">Account</a>
+    <a href="warenkorb.jsp" class="navLink">Warenkorb</a><br/>
+    <a href="verleihe.jsp" class="navLink">Ausgeliehenen</a><br/>
+    <a href="account.jsp" class="navLink">Account</a> <br/>
+    <a href="aboutus.jsp" class="navLink">About Us</a><br/>
 </p>
 </nav>
