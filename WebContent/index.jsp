@@ -10,7 +10,6 @@
 
         <title>Fahrrad-Kauf GmbH</title>
         <link rel="stylesheet" type="text/css" href="styles.css">
-        <script language="javascript" type="text/javascript" src="javascript/shoutbox.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">             
         </script>
         <script >

@@ -262,3 +262,22 @@ function pruefeLogin(){
 		window.location.href="index.jsp";
 	}
 }
+
+function gebeZurueck(fahrrad, benutzer){
+	// AJAX temporär auf synchron stellen
+	$.ajaxSetup({
+	    async: false
+	});
+	
+    $.get("Verleih?fahrrad=" + fahrrad + "&benutzer=" + benutzer + "&aktion=entfernen",
+            function(obj)
+            {}
+    );
+    
+	// AJAX temporär auf synchron stellen
+	$.ajaxSetup({
+	    async: true
+	});
+	
+    location.reload(); 
+}
