@@ -80,8 +80,16 @@ public class Model {
 		  //String db_url = "jdbc:hsqldb:hsql:http://localhost/Fahrradladen";
 
 		  String table = db + "." + tabelle;
-		  String statement = "SELECT " + spalten + " FROM " + table + " WHERE " + where + ";";
-		  String statement_count = "SELECT COUNT(*) FROM " + table + " WHERE " + where + ";";
+		  
+		  String statement = "SELECT " + spalten + " FROM " + table; 
+		  if(!(where == null || where.equals("")))
+			  statement = statement + " WHERE " + where;
+		  statement = statement + ";";
+		  
+		  String statement_count = "SELECT COUNT(*) FROM " + table;
+		  if(!(where == null || where.equals("")))
+			  statement_count = statement_count + " WHERE " + where;
+		  statement_count = statement_count + ";";
 		
 		
 
