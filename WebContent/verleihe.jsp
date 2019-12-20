@@ -273,6 +273,14 @@
     			window.location.href="index.jsp";
     		}
     	}
+    	
+    	function versteckeWennNichtAdmin(){
+    		username = '<%=session.getAttribute("username")%>';
+
+    		if (!(username=="admin")){
+    			$(".versteckeWennNichtAdmin").hide();
+    		}
+    	}
         </script>
 <script>
             $("document").ready(function()
@@ -289,10 +297,13 @@
             		  
             		  //login checken
             		  pruefeLogin();
+            		  
 
             		});
             	
 
+            	versteckeWennNichtAdmin();
+            	
             });
             
             function gebeZurueck(fahrrad, benutzer){
@@ -322,10 +333,10 @@
 			<tr >
 				<th>Marke</th>
 				<th>Größe</th>
-				<th>Preis</th>
-				<th>Benutzername</th>
-				<th>Vorname</th>
-				<th>Nachname</th>
+				<th >Preis</th>
+				<th class="versteckeWennNichtAdmin">Benutzername</th>
+				<th class="versteckeWennNichtAdmin">Vorname</th>
+				<th class="versteckeWennNichtAdmin">Nachname</th>
 			</tr>
 			<%@ page import="java.sql.*" isThreadSafe="false" %>
 				<%
@@ -366,6 +377,8 @@
 				      rs = st.executeQuery( statement );
 				      ResultSetMetaData rsmd = rs.getMetaData();
 				      int n = rsmd.getColumnCount();
+				      if (!istAdmin)
+				    	  n -= 3; //Benutzerdaten ausblenden, wenn nicht admin
 				      while( rs.next() )
 				      {
 					    String fahrradid = rs.getString( 1 );
