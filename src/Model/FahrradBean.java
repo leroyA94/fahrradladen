@@ -5,6 +5,8 @@ public class FahrradBean {
     private int id, groesse;
     private double preis;
 
+    private String bild;
+    private int aufLager;
 
 	public String getMarke() {
 		return marke;
@@ -36,5 +38,21 @@ public class FahrradBean {
 
 	public void setPreis(double preis) {
 		this.preis = preis;
+	}
+
+	public int getAufLager() {
+		return aufLager;
+	}
+
+	public void setAufLager(int aufLager) {
+		this.aufLager = aufLager;
+	}
+
+	public String getBild() {
+		return bild;
+	}
+
+	public void setBild(String bild) {
+		this.bild = bild;
 	}
 }

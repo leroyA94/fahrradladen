@@ -1,5 +1,6 @@
 header {}
-body {}
+body {
+}
 h3 { text-decoration: underline;} 
 a:visited {}
 .navLink {
@@ -25,3 +26,9 @@ margin-top:30px;}
 .bottom {margin-left: 190px;margin-top: 20px; position: absolute; bottom: 10px; clear: left; clear: right}
 
 #imgVorstand {float: left; width: 20%}
+
+.bg {
+	background-image: url("images/hintergrund.jpeg");
+	background-repeat: no-repeat;
+	background-size: auto;
+}

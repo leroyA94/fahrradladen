@@ -1,4 +1,5 @@
 
+
 <%@page import="Model.Model"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -64,12 +65,16 @@
 <%@ include file="navigation.jsp" %> 
 
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-  <h1 class="display-4">About Us</h1>
+  <h1 class="display-4">Anfahrt</h1>
   </div>
 
 <div class="container">
 
-	<p>Wir sind ein kleines Unternehmen, das versucht Ihnen die Freiheit zu geben, für kleines Geld großes zu erleben. Wir möchten Mobilität für jeden fördern und möchten Erlebnisse schaffen. Dabei ist es egal, was sie brauchen - ob Standard, Premium oder e-Bike. Wir haben sie alle.</p>
+Fahrradladen GmbH</b>
+<br>Coblitzalle 9<br>
+68163 Mannheim<br>
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2592.573199302558!2d8.532094815765442!3d49.4736785793526!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4797cf23839f450f%3A0x817dadb8293c65ee!2sCoblitzallee%209%2C%2068163%20Mannheim!5e0!3m2!1sde!2sde!4v1577037523360!5m2!1sde!2sde" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+
 
 
 	</div>

@@ -1,35 +1,39 @@
-<%-- 
-    Document   : newjsp
-    Created on : 25.06.2015, 23:50:15
---%>
-
+<%@page import="Model.Model"%>
+<%@page import="Model.FahrradBean"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-
-        <title>Fahrrad-Kauf GmbH</title>
-        <link rel="stylesheet" type="text/css" href="styles.css">
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">             
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
+        <title>JSP Page</title>
+        <link rel="stylesheet" href="styles2.css">
+       <!--  <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script> -->
+        <script type="text/javascript" src="javascript/global.js"></script>
+<script type="text/javascript">
+         
+     
         </script>
         <script >
-		   	function benutzerIstAngemeldet(){
-		   		username = '<%=session.getAttribute("username")%>'
-		       		
-		      		return !(username == null || username == "")
-		   	}
-        
             $("document").ready(function()
             {
             	
             	window.addEventListener( "pageshow", function ( event ) {
-
-            		if(benutzerIstAngemeldet()){
-            			//alert("fdas");
-            			window.location.href="fahrraeder.jsp";
-            		}
+            		//var historyTraversal = event.persisted || 
+            		  //                       ( typeof window.performance != "undefined" && 
+            		   //                           window.performance.navigation.type === 2 );
+            		  //if ( historyTraversal ) {
+            		    // Handle page restore.
+            		    updateWarenkorbGUI();
+            		  //}
             		  
-            	});
+            		  //login checken
+            		  pruefeLogin();
+            		});
 
             	
             	
@@ -37,80 +41,49 @@
             });
                       
         </script>
+        <meta name="theme-color" content="#563d7c">
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
     </head>
-    <body>
+ 
+  <body class="text-center">
 
-		<h1> Wilkommen bei Fahrradladen GmbH</h1>
-  		<form method="GET" action="Login" class="content">
-            <fieldset>
-                <legend>Login</legend>
-                E-Mail-Adresse: <input name="username" type="text" size="20" required="required"/></br>
-                Passwort: <input name="pw" type="password" size="20" required="required"/></br>
-            </fieldset>
-            <p id="pFormButtons">
-                <input type="submit" value="Einloggen"/>
-            </p>
+<div class="container">
+    <form class="form-signin" method="GET" action="Login" >
+  <h1 class="h3 mb-3 font-weight-normal">Login</h1>
+  <label for="username" class="sr-only">Email-Adresse</label>
+  <input width="100" class="form-control" name="username" type="text" placeholder="Email-Adresse" required="required" required autofocus/>
 
-        </form>  
+  <label for="pw" class="sr-only">Password</label>
+  <input name="pw" type="password" size="20"  class="form-control" placeholder="Passwort"  required="required"/>
+
+  <input class="btn btn-lg btn-primary btn-block" type="submit" value="Einloggen"/>
+</form>
+
         <p>
         Neu hier? Dann geht es <a href="registrierung.jsp" >hier zur Registrierung.</a>
         </p>
 
-        <%@ include file="footer.jsp" %> 
+</div>
+   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
     </body>
-</html>  
-<!--
-<!DOCTYPE html>
-
-<html>
-
-
-
-
-<title>Fahrrad-Kauf GmbH</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">             
-</script>
-<style>
-body,h1 {font-family: "Raleway", sans-serif}
-body, html {height: 100%}
-.bgimg {
-  background-image: url('/images/forestbridge.jpg');
-  min-height: 100%;
-  background-position: center;
-  background-size: cover;
-}
-
-</style>
-<body>
-
-<div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
-  <div class="w3-display-topleft w3-padding-large w3-xlarge">
-    Logo
-  </div>
-  <div class="w3-display-middle">
-    <h1 class="w3-jumbo w3-animate-top">Wilkommen bei Fahrradladen GmbH</h1>
-    <hr class="w3-border-grey" style="margin:auto;width:40%">
-      		<form method="GET" action="Login" class="content">
-            <fieldset>
-                <legend>Login</legend>
-                Name: <input name="username" type="text" size="20" required="required"/></br>
-                Passwort: <input name="pw" type="text" size="20" required="required"/></br>
-            </fieldset>
-            <p id="pFormButtons">
-                <input type="submit" value="Einloggen"/>
-            </p>
-
-        </form>  
-  </div>
-  <div class="w3-display-bottomleft w3-padding-large">
-  </div>
-</div>
-
-</body>
 </html>
--->

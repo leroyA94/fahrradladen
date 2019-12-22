@@ -161,7 +161,7 @@ public class Model {
     
     public FahrradBean getFahrrad(String id) {
     	
-    	String [] [] dbResult = getDBResult("Fahrraeder", "Marke, Groesse, Preis ", "Id = '" + id +"'");
+    	String [] [] dbResult = getDBResult("Fahrraeder", "Marke, Groesse, Preis, aufLager, bild ", "Id = '" + id +"'");
 
     	if (dbResult.length == 0)
     		return null;
@@ -171,6 +171,8 @@ public class Model {
     		bean.setMarke(dbResult[0][0]);
     		bean.setGroesse(Integer.parseInt(dbResult[0][1]));
     		bean.setPreis(Double.parseDouble(dbResult[0][2]));
+    		bean.setAufLager(Integer.parseInt(dbResult[0][3]));
+    		bean.setBild((dbResult[0][4]));
     		return bean;
     	}
     	
@@ -201,16 +203,33 @@ public class Model {
     	
     }
     
+    public boolean pruefeVerleih( int fahrradId, int benutzerId) {
+
+    	String [] []  result;
+    	result = getDBResult("Verleihe",
+    			"benutzerId, fahrradId", "benutzerId='" + benutzerId + "' AND fahrradId='" + fahrradId + "' "); 
+    		return (result.length > 0);	
+
+    }
+    
     public boolean erzeugeVerleih( int fahrradId, int benutzerId) {
 
-    	return executeOnDB("INSERT INTO Fahrradladen.Verleihe (fahrradId, benutzerId) VALUES (\"" + fahrradId + "\", \"" + benutzerId + "\");");
+    	boolean result;
+    	result = executeOnDB("INSERT INTO Fahrradladen.Verleihe (fahrradId, benutzerId) VALUES (\"" + fahrradId + "\", \"" + benutzerId + "\");");
+    	if (result)
+    		result = executeOnDB(" update Fahrradladen.Fahrraeder set aufLager = " + pruefeFahrradAufLager(fahrradId) + " -1 WHERE Id = "+ fahrradId + ";");
     	
+    	return result;
     }
     
     public boolean entferneVerleih( int fahrradId, int benutzerId) {
 
-    	return executeOnDB("DELETE FROM Fahrradladen.Verleihe WHERE fahrradId=" + fahrradId + " AND benutzerId=" + benutzerId + ";");
+    	boolean result;
+    	result = executeOnDB("DELETE FROM Fahrradladen.Verleihe WHERE fahrradId=" + fahrradId + " AND benutzerId=" + benutzerId + ";");
+    	if(result)
+    		result = executeOnDB(" update Fahrradladen.Fahrraeder set aufLager = " + pruefeFahrradAufLager(fahrradId) + " +1 WHERE Id = "+ fahrradId + ";");
     	
+    	return result;
     }
     
     public int pruefeFahrradIstVerliehenAn(int id) {
@@ -223,6 +242,15 @@ public class Model {
     		return Integer.parseInt(data[0][0]);
     }
     
+    public int pruefeFahrradAufLager(int id) {
+    	String [] [] data = getDBResult("Fahrraeder",
+    			"aufLager", "Id='" + id + "'");
+    	
+    	if(data.length == 0)
+    		return 0;
+    	else
+    		return Integer.parseInt(data[0][0]);
+    }
     
     
 }

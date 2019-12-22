@@ -13,13 +13,15 @@
         
         <title>JSP Page</title>
         <link rel="stylesheet" href="styles2.css">
-        <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+       <!--  <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script> -->
         <script type="text/javascript" src="javascript/global.js"></script>
 
-		<script>
+        <script type="text/javascript" >
+        
+        
+        
             $("document").ready(function()
             {
-
             	
             	window.addEventListener( "pageshow", function ( event ) {
             		//var historyTraversal = event.persisted || 
@@ -32,11 +34,13 @@
             		  
             		  //login checken
             		  pruefeLogin();
-
             		});
-            	
 
+            	
+            	
+            	
             });
+                      
         </script>
 
     <style>
@@ -63,30 +67,15 @@
 <%@ include file="navigation.jsp" %> 
 
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-  <h1 class="display-4">Warenkorb</h1>
+  <h1 class="display-4">Unsere Fahrräder</h1>
   </div>
 
 <div class="container">
-<div >
-		<p id="pWarenkorbLeer">Ihr Warenkorb enthält noch keine Artikel.</p>
-		<table class="table" id="tblWarenkorb"  border="1" cellpadding="3">
-			<tr>
-				<th colspan="5">Folgende Artikel befinden sich in Ihrem
-					Warenkorb:</th>
-			</tr>
-			<tr>
-				<td id="td_warenkorb" colspan="4"></td>
-			</tr>
+  <div class="card-deck mb-3 text-center">
 
-			<tr id="warenkorb_header">
-				<th>Marke</th>
-				<th>Größe</th>
-				<th>Preis</th>
-				<th></th>
-			</tr>
-			<!--  
-	            %@ page import="java.sql.*" isThreadSafe="false" %>
-				%
+             <%@ page import="java.sql.*" isThreadSafe="false" %>
+				<%
+				
 			      //String db_url = "jdbc:mysql://localhost/Fahrradladen";
 				  //String treiber = "com.mysql.jdbc.Driver";
 				
@@ -96,8 +85,11 @@
 				  String user   = "webapp";
 				  String pw = "test";
 				  String table = "Fahrradladen.Fahrraeder";
-				  String statement = "SELECT Id, Marke, Groesse, Preis FROM " + table + ";";
-				
+				  //String statement = "SELECT Id, Marke, Groesse, Preis FROM " + table + 
+					//	  " LEFT JOIN Fahrradladen.Verleihe " + 
+					//	  " ON Fahrradladen.Fahrraeder.Id = Fahrradladen.Verleihe.fahrradId " + 
+					//	  " WHERE Fahrradladen.Verleihe.benutzerId IS NULL ";
+				String statement = "SELECT Id, Marke, Groesse, Preis, bild, bezeichnung FROM " + table;
 				
 
 				    Connection cn = null;
@@ -114,18 +106,44 @@
 				      st = cn.createStatement();
 				      rs = st.executeQuery( statement );
 				      ResultSetMetaData rsmd = rs.getMetaData();
-				      int n = rsmd.getColumnCount();
+				      int n = rsmd.getColumnCount() -1 ;
 				      while( rs.next() )
 				      {
-				    	String id = rs.getString( 1 );
-				        out.println( "</tr><tr class=\"trWarenkorb\" id=\"tr" + id + "\">" ); //id des Fahrrads im id-Attribut des tr-Elements speichern
-				        for( int i=2; i<=n; i++ )  // Bei 2 beginnen, da ID nicht angezeigt werden soll
-				          out.println( "<td>" + rs.getString( i ) + "</td>" );
-				        
-				        out.println(
-		                        "<td>" +
-		                        "<button id=\"btnRemove" + id + "\" onclick=\"entferneAusWarenkorb(\' " + id + " \')\">Aus Warenkorb entfernen</button>" +
-		            	    	"</td>" );
+					    	String id = rs.getString( 1 );
+					    	String bild = "images/bikes/" + rs.getString(5);
+					    	String marke = rs.getString( 2 );
+					    	String groesse = rs.getString( 3 );
+					    	String preis = rs.getString( 4 );
+					    	String bezeichnung = rs.getString( 6 );
+					    	
+				    	 out.println("    <div class=\"card mb-4 shadow-sm\">" + 
+				        "  <div class=\"card-header\">" + 
+				        "  <h4 class=\"my-0 font-weight-normal\">" +  bezeichnung +"</h4>" + 
+				       " </div>" + 
+				       " <div class=\"card-body\">" + 
+				         " <h1 class=\"card-title pricing-card-title\">" +  preis + " € <small class=\"text-muted\">/ Monat</small></h1>" + 
+				         " <ul class=\"list-unstyled mt-3 mb-4\">" + 
+				           " <li><img height=100 src='" + bild + "' /></li>" + 
+				           " <li>" + groesse +" Zoll</li>" + 
+				           " <li>" + marke +"</li>" + 
+				         " </ul>" + 
+				         "<button type=\"button\" class=\"btn btn-lg btn-block btn-primary\" id=\"btn" + id + "\" onclick=\"packeInWarenkorb(\' " + id + " \')\">In den Warenkorb</button>" +
+				           " </div>" + 
+				      "</div>");
+				    	  
+
+				    	//String bild = "images/bikes/e.jpeg";
+				    	/*
+				    	if (Model.getInstance().pruefeFahrradAufLager(Integer.parseInt(id)) > 0){
+					        out.println( "</tr><tr id=\"" + id + "\">" ); //id des Fahrrads im id-Attribut des tr-Elements speichern
+					        out.println("<td><img height=100 src='" + bild + "' /></td>" ); // Bild
+					        for( int i=2; i<=n; i++ )  // Bei 2 beginnen, da ID nicht angezeigt werden soll
+					          out.println( "<td>" + rs.getString( i ) + "</td>" );
+					        out.println(
+	                        "<td>" +
+	                        "<button id=\"btn" + id + "\" onclick=\"packeInWarenkorb(\' " + id + " \')\">In den Warenkorb</button>" +
+	            	    	"</td>" );
+				    	}*/
 				      }
 				    } finally {
 				      try { if( null != rs ) rs.close(); } catch( Exception ex ) {}
@@ -133,15 +151,10 @@
 				      try { if( null != cn ) cn.close(); } catch( Exception ex ) {}
 				    }
 				 
-				%>-->
-
-			<tr id="tr_warenkorb_gesamt">
-				<td id="td_warenkorb_gesamt" colspan=5 />
-			</tr>
-		</table>
-		<button id="btnAusleihen" onclick="leiheArtikelAus()" class="btn btn-primary">Ausleihen</button>
-		<button id="btnWKleeren" onclick="leereWarenkorb()" class="btn btn-primary">Warenkorb leeren</button>
-	</div>
+				%>
+	
+    
+  </div>
 
   <footer class="pt-4 my-md-5 pt-md-5 border-top">
 
@@ -149,7 +162,7 @@
 </div>
 
 
-  <!--  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>  -->
+   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 

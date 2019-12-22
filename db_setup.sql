@@ -6,10 +6,10 @@ CREATE USER 'webapp'@'localhost' IDENTIFIED BY 'test';
 
 
 
-CREATE TABLE Fahrradladen.Fahrraeder (Id int NOT NULL AUTO_INCREMENT, Marke varchar(255), Groesse int NOT NULL, Preis DOUBLE NOT NULL, PRIMARY KEY (Id));
-INSERT INTO Fahrradladen.Fahrraeder (Marke, Groesse, Preis) VALUES ("Gazelle", 26, 199.99);
-INSERT INTO Fahrradladen.Fahrraeder (Marke, Groesse, Preis) VALUES ("Pegasus", 28, 300);
-INSERT INTO Fahrradladen.Fahrraeder (Marke, Groesse, Preis) VALUES ("Pegasus", 26, 1100);
+CREATE TABLE Fahrradladen.Fahrraeder (Id int NOT NULL AUTO_INCREMENT, Marke varchar(255), Groesse int NOT NULL, Preis DOUBLE NOT NULL, aufLager int, PRIMARY KEY (Id));
+INSERT INTO Fahrradladen.Fahrraeder (Marke, Groesse, Preis, aufLager, bzeichnung) VALUES ("Gazelle", 26, 15,10, "Standard");
+INSERT INTO Fahrradladen.Fahrraeder (Marke, Groesse, Preis, aufLager, bzeichnung) VALUES ("Pegasus", 28, 30,20, "Premium");
+INSERT INTO Fahrradladen.Fahrraeder (Marke, Groesse, Preis, aufLager, bzeichnung) VALUES ("Pegasus", 26, 60,12, "E-Bike");
 
 
 
@@ -21,7 +21,7 @@ INSERT INTO Fahrradladen.Benutzer (Benutzername, Name, Vorname , Passwort) VALUE
 
 
 
-CREATE TABLE Fahrradladen.Verleihe (fahrradId int NOT NULL, benutzerId int NOT NULL, PRIMARY KEY (fahrradId, benutzerId), 
+CREATE TABLE Fahrradladen.Verleihe (Id int NOT NULL AUTO_INCREMENT, fahrradId int NOT NULL, benutzerId int NOT NULL, PRIMARY KEY (Id), 
     CONSTRAINT FK_Fahrraeder FOREIGN KEY (fahrradId) REFERENCES Fahrraeder(Id), 
     CONSTRAINT FK_Benutzer FOREIGN KEY (benutzerId)  REFERENCES Benutzer(Id));
 

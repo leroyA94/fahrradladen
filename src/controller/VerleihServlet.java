@@ -37,23 +37,21 @@ public class VerleihServlet extends HttpServlet {
 
 		int benutzerId = Integer.parseInt(request.getSession().getAttribute("benutzerid").toString());
 		
-		int fahrradIstVerliehenAn = Model.getInstance().pruefeFahrradIstVerliehenAn(Integer.parseInt(fahrradId));
 		
 		if(aktion==null || aktion.equals("")) {
-			//wenn nur fahrrad angegeben ist 
-			//-> prüfe ob fahrrad verliehen ist		
+			//-> prüfe ob fahrrad auf Lager ist
 
-			int result = fahrradIstVerliehenAn;
+			int result = Model.getInstance().pruefeFahrradAufLager(Integer.parseInt((fahrradId)));
 			
 	    	response.setContentType("text/plain");  
 			response.setCharacterEncoding("UTF-8");   		 
 	    	response.getWriter().write(String.valueOf(result));
-	    	
+
 		}else if (aktion.equals("ausleihen")) {
 			
-			if (fahrradIstVerliehenAn > 0) {
+			if (Model.getInstance().pruefeFahrradAufLager(Integer.parseInt(fahrradId)) <= 0) {
 				//ist bereits verliehen
-				//todo
+			
 			}else {
 				//leihe Fahrrad aus
 				boolean result = Model.getInstance().erzeugeVerleih(
@@ -76,20 +74,27 @@ public class VerleihServlet extends HttpServlet {
 
 				benutzerId = Integer.parseInt(request.getParameter("benutzer"));
 				
-				if (fahrradIstVerliehenAn == (benutzerId)) {
+				//if (fahrradIstVerliehenAn == (benutzerId)) {
 					//Lösche verleih
 					 result = Model.getInstance().entferneVerleih(Integer.parseInt(fahrradId),
 							(benutzerId));					
 
-				}else {
+				//}else {
 					//zu löschender Verleih existiert nicht
-					result = false;
-				}
+				//	result = false;
+				//}
 				
 		    	response.setContentType("text/plain");  
 				response.setCharacterEncoding("UTF-8");   		 
 		    	response.getWriter().write(result?"1":"0");  
 				
+			}else if (aktion.equals("pruefen")) {
+				
+				boolean result = Model.getInstance().pruefeVerleih(Integer.parseInt(fahrradId), benutzerId);
+				
+		    	response.setContentType("text/plain");  
+				response.setCharacterEncoding("UTF-8");   		 
+		    	response.getWriter().write(result?"1":"0");  
 			}
       
 		

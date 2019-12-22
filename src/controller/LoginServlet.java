@@ -46,11 +46,11 @@ public class LoginServlet extends HttpServlet {
 	    	//Login-Daten lesen
 	    	String username = request.getParameter("username");
 	    	String pw = request.getParameter("pw");
-	    	
+	    
+	    	//Login-Daten prüfen 
 	    	int userid = Model.Model.getInstance().pruefeLogin(username, pw);
 	    	
-	    	//Login-Daten prüfen 
-	    	//todo ersetzen durch echte prüfung
+	    
 	    	if(userid > 0) {
 	    		
 
@@ -59,7 +59,7 @@ public class LoginServlet extends HttpServlet {
 	        	   
 	         
 	            //Weiterleitung an Fahrrad-Seite
-	            RequestDispatcher disp = request.getRequestDispatcher("/fahrraeder.jsp");
+	            RequestDispatcher disp = request.getRequestDispatcher("/start.jsp");
 	            disp.forward(request, response);
 	                
 	    	}else {

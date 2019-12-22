@@ -32,7 +32,9 @@
  }
  
 function packeInWarenkorb(id){
+
 	id = id.trim();
+
 	str_warenkorb = localStorage.getItem("warenkorb");
 
 	if(str_warenkorb == null || str_warenkorb == "")
@@ -101,14 +103,23 @@ function updateWarenkorbGUI(){
 	
 	if(warenkorb.length == 0){
 		//nichts im Warenkorb
-		$("#pWarenkorbLeer").show()
-		$("#tblWarenkorb").hide()
+		
+		$("#pWarenkorbLeer").removeClass('d-none');// .show()
+		$("#tblWarenkorb").addClass('d-none');//.hide()
+
+		$("#btnWKleeren").addClass('d-none');
+		$("#btnAusleihen").addClass('d-none');
+		
 	}
 	else
 	{
 		//Artikel im Warenkorb vorhanden       		
-		$("#tblWarenkorb").show()
-		$("#pWarenkorbLeer").hide()       		
+		$("#tblWarenkorb").removeClass('d-none');// .show()
+		$("#pWarenkorbLeer").addClass('d-none');//.hide()   	
+		
+
+		$("#btnWKleeren").removeClass('d-none');//.hide()   
+		$("#btnAusleihen").removeClass('d-none');//.hide()  
 		
 	}
 	
@@ -134,13 +145,32 @@ function aktualisiereButtons(){
 	
 	warenkorb = getWarenkorb();
 	
+	
 	warenkorb.forEach(function(item, index){
 		id = "#btn" + $.trim(item)
 		$(id).attr("disabled", true);
-	})        	
+		//$(id).hide();
+		//$(id).addClass('d-none');//.hide()
+	})
+	
+	// schon ausgeliehene Fahrräder ausblenden
+	username = '<%=session.getAttribute("username")%>';
+	for(var i = 1; i <= 3; i++){
+	     $.getJSON("Fahrrad?id=" + i + "&benutzer=" + username + "&aktion=pruefen",
+	                function(obj)
+	                {	
+	    	 			if(obj = 1){
+	    	 				id = "#btn" + $.trim(item)
+	    	 				$(id).attr("disabled", true);
+	    	 			}
+
+	                           
+	                      
+	                })
+	}
+	
 } 
 
-//deaktiviert/aktiviert Buttons anhand des Warenkorbs
 function aktualisiereWarenkorbTabelle(){
 
 	
