@@ -65,7 +65,9 @@
   <body class="text-center">
 
 <div class="container">
-    <form class="form-signin" method="GET" action="Login" >
+
+
+<form class="form-signin" method="GET" action="Login" >
   <h1 class="h3 mb-3 font-weight-normal">Login</h1>
   <label for="username" class="sr-only">Email-Adresse</label>
   <input width="100" class="form-control" name="username" type="text" placeholder="Email-Adresse" required="required" required autofocus/>
