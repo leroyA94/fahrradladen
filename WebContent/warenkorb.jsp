@@ -29,9 +29,7 @@
             		    // Handle page restore.
             		    updateWarenkorbGUI();
             		  //}
-            		  
-            		  //login checken
-            		  pruefeLogin();
+
 
             		});
             	

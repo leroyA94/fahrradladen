@@ -32,6 +32,7 @@ public class LogoutServlet extends HttpServlet {
     	//Login-Daten löschen
 
     	request.getSession().setAttribute("username", "");
+    	request.getSession().setAttribute("benutzerid", "");
 
     	// zurück auf Login-Seite
     	RequestDispatcher disp = request.getRequestDispatcher("/index.jsp");

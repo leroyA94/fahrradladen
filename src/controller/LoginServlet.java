@@ -57,16 +57,12 @@ public class LoginServlet extends HttpServlet {
 	        	request.getSession().setAttribute("username", username);
 	        	request.getSession().setAttribute("benutzerid", userid);
 	        	   
-	         
-	            //Weiterleitung an Fahrrad-Seite
-	            RequestDispatcher disp = request.getRequestDispatcher("/start.jsp");
-	            disp.forward(request, response);
-	                
-	    	}else {
-	    		//Seite neu laden
-	            RequestDispatcher disp = request.getRequestDispatcher("/index.jsp");
-	            disp.forward(request, response);
 	    	}
+	    	
+	         
+            //Weiterleitung an Start-Seite
+            RequestDispatcher disp = request.getRequestDispatcher("/index.jsp");
+            disp.forward(request, response);
     	
 
     	//}

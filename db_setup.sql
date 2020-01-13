@@ -6,7 +6,7 @@ CREATE USER 'webapp'@'localhost' IDENTIFIED BY 'test';
 
 
 
-CREATE TABLE Fahrradladen.Fahrraeder (Id int NOT NULL AUTO_INCREMENT, Marke varchar(255), Groesse int NOT NULL, bezeichnung varchar(255), Preis DOUBLE NOT NULL, aufLager int, PRIMARY KEY (Id));
+CREATE TABLE Fahrradladen.Fahrraeder (Id int NOT NULL AUTO_INCREMENT, Marke varchar(255), Groesse int NOT NULL, bezeichnung varchar(255), Preis DOUBLE NOT NULL, aufLager int, bild varchar(255), PRIMARY KEY (Id));
 INSERT INTO Fahrradladen.Fahrraeder (Marke, Groesse, Preis, aufLager, bezeichnung, bild) VALUES ("Gazelle", 26, 15,10, "Standard","standard.jpeg");
 INSERT INTO Fahrradladen.Fahrraeder (Marke, Groesse, Preis, aufLager, bezeichnung, bild) VALUES ("Pegasus", 28, 30,20, "Premium", "premium.jpeg");
 INSERT INTO Fahrradladen.Fahrraeder (Marke, Groesse, Preis, aufLager, bezeichnung, bild) VALUES ("Pegasus", 26, 60,12, "E-Bike", "e.jpeg");

@@ -35,72 +35,88 @@ public class VerleihServlet extends HttpServlet {
 		String fahrradId = request.getParameter("fahrrad");
 		String aktion = request.getParameter("aktion");
 
-		int benutzerId = Integer.parseInt(request.getSession().getAttribute("benutzerid").toString());
+		Object obj_benutzerid = request.getSession().getAttribute("benutzerid");
 		
+		//wenn user nicht eingeloggt ist..
+		if(obj_benutzerid == null || obj_benutzerid.toString().strip().length() == 0) {
+	         // nichts tun
+            //Weiterleitung an Login-Seite, 
+            //RequestDispatcher disp = request.getRequestDispatcher("/index.jsp");
+            //disp.forward(request, response);
+		}else {
 		
-		if(aktion==null || aktion.equals("")) {
-			//-> prüfe ob fahrrad auf Lager ist
-
-			int result = Model.getInstance().pruefeFahrradAufLager(Integer.parseInt((fahrradId)));
+			int benutzerId = Integer.parseInt(obj_benutzerid.toString());
 			
-	    	response.setContentType("text/plain");  
-			response.setCharacterEncoding("UTF-8");   		 
-	    	response.getWriter().write(String.valueOf(result));
-
-		}else if (aktion.equals("ausleihen")) {
 			
-			if (Model.getInstance().pruefeFahrradAufLager(Integer.parseInt(fahrradId)) <= 0) {
-				//ist bereits verliehen
-			
-			}else {
-				//leihe Fahrrad aus
-				boolean result = Model.getInstance().erzeugeVerleih(
-						Integer.parseInt(fahrradId), (benutzerId));
-				
-		        //Weiterleitung an Fahrrad-Seite
-		        RequestDispatcher disp = request.getRequestDispatcher("/fahrraeder.jsp");
-		        disp.forward(request, response);
-			}
-						
-		}else if (aktion.equals("entfernen")) {
-			
-
-			String benutzername = request.getSession().getAttribute("username").toString();
-			
-			if(benutzername.equals("admin")) { //nur der Admin darf Fahrräder als zurückgegeben kennzeichnen
-				
-				boolean result;
-				
-
-				benutzerId = Integer.parseInt(request.getParameter("benutzer"));
-				
-				//if (fahrradIstVerliehenAn == (benutzerId)) {
-					//Lösche verleih
-					 result = Model.getInstance().entferneVerleih(Integer.parseInt(fahrradId),
-							(benutzerId));					
-
-				//}else {
-					//zu löschender Verleih existiert nicht
-				//	result = false;
-				//}
+			if(aktion==null || aktion.equals("")) {
+				//-> prüfe ob fahrrad auf Lager ist
+	
+				int result = Model.getInstance().pruefeFahrradAufLager(Integer.parseInt((fahrradId)));
 				
 		    	response.setContentType("text/plain");  
 				response.setCharacterEncoding("UTF-8");   		 
-		    	response.getWriter().write(result?"1":"0");  
+		    	response.getWriter().write(String.valueOf(result));
+	
+			}else if (aktion.equals("ausleihen")) {
 				
+				if (Model.getInstance().pruefeFahrradAufLager(Integer.parseInt(fahrradId)) <= 0) {
+					//ist bereits verliehen
+				
+				}else if (Model.getInstance().pruefeVerleih(Integer.parseInt(fahrradId), benutzerId)){
+					// Nutzer hat Fahrrad bereits ausgeliehen 
+				}
+				else {
+					//leihe Fahrrad aus
+					boolean result = Model.getInstance().erzeugeVerleih(
+							Integer.parseInt(fahrradId), (benutzerId));
+					
+			        //Weiterleitung an Fahrrad-Seite
+			        RequestDispatcher disp = request.getRequestDispatcher("/fahrraeder.jsp");
+			        disp.forward(request, response);
+				}
+							
+			}else if (aktion.equals("entfernen")) {
+				
+	
+				String benutzername = request.getSession().getAttribute("username").toString();
+				
+				if(benutzername.equals("admin")) { //nur der Admin darf Fahrräder als zurückgegeben kennzeichnen
+					
+					boolean result;
+					
+	
+					benutzerId = Integer.parseInt(request.getParameter("benutzer"));
+					
+					//if (fahrradIstVerliehenAn == (benutzerId)) {
+						//Lösche verleih
+						 result = Model.getInstance().entferneVerleih(Integer.parseInt(fahrradId),
+								(benutzerId));					
+	
+					//}else {
+						//zu löschender Verleih existiert nicht
+					//	result = false;
+					//}
+					
+			    	response.setContentType("text/plain");  
+					response.setCharacterEncoding("UTF-8");   		 
+			    	response.getWriter().write(result?"1":"0");  
+					
+				}
 			}else if (aktion.equals("pruefen")) {
-				
+					
+				benutzerId = Integer.parseInt(request.getParameter("benutzer"));
 				boolean result = Model.getInstance().pruefeVerleih(Integer.parseInt(fahrradId), benutzerId);
 				
+				
 		    	response.setContentType("text/plain");  
 				response.setCharacterEncoding("UTF-8");   		 
 		    	response.getWriter().write(result?"1":"0");  
 			}
-      
-		
-		}
+	      
 			
-		
+			
+			
+		}
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the

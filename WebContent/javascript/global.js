@@ -133,9 +133,25 @@ function updateWarenkorbGUI(){
 	//Buttons 
 	aktualisiereButtons();
 	
+	//Show/hide wenn aus- oder eingeloggt
+	showOrHideIfLoggedIn();
+	
 	//Gesamtpreis
 	$("#td_warenkorb_gesamt").html("Gesamtpreis: " + getWarenkorbPreis());
 
+}
+
+// Show/hide wenn aus- oder eingeloggt
+function showOrHideIfLoggedIn() {
+	
+	if(benutzerIstAngemeldet()){
+		$(".showWhenLoggedIn").removeClass('d-none');
+		$(".showWhenLoggedOut").addClass('d-none');
+	}else {
+		
+		$(".showWhenLoggedIn").addClass('d-none');
+		$(".showWhenLoggedOut").removeClass('d-none');
+	}
 }
 
 //deaktiviert/aktiviert Buttons anhand des Warenkorbs
@@ -154,13 +170,18 @@ function aktualisiereButtons(){
 	})
 	
 	// schon ausgeliehene Fahrräder ausblenden
-	username = '<%=session.getAttribute("username")%>';
+    // AJAX kurz auf synchron stellen, sonst ist der Wert für i falsch
+	$.ajaxSetup({
+      async: false
+	});
+	
+	user = getUserId();
 	for(var i = 1; i <= 3; i++){
-	     $.getJSON("Fahrrad?id=" + i + "&benutzer=" + username + "&aktion=pruefen",
+	     $.getJSON("Verleih?fahrrad=" + i + "&benutzer=" + user + "&aktion=pruefen",
 	                function(obj)
 	                {	
-	    	 			if(obj = 1){
-	    	 				id = "#btn" + $.trim(item)
+	    	 			if(obj == 1){
+	    	 				id = "#btn" + (i);
 	    	 				$(id).attr("disabled", true);
 	    	 			}
 
@@ -168,6 +189,11 @@ function aktualisiereButtons(){
 	                      
 	                })
 	}
+	
+    // AJAX kurz auf synchron stellen, sonst ist der Wert für i falsch
+	$.ajaxSetup({
+      async: true
+	});
 	
 } 
 
@@ -260,6 +286,13 @@ function leiheArtikelAus(){
 	//todo Fall, in dem zwischenzeiltich ein anderer User ausgeliehen hat
 	//todo Fehlgeschlagener Verleih
 	
+	username = getUsername();
+	if(username == null || username.length == 0){
+
+		window.location.assign("login.jsp");
+	}else{
+		
+	
 	warenkorb = getWarenkorb(); //hole warenkorb
 	
 	
@@ -275,13 +308,25 @@ function leiheArtikelAus(){
     		leereWarenkorb();
     	}
    
-   
+}
     	
-    	//login prüfen
+    	
+function getUsername(){
+	return username = $("#link_username").html();
+}
 
+function getUserId(){
+	return username = $("#link_userid").html();
+}
+
+
+//login prüfen
 function benutzerIstAngemeldet(){
-	username = '<%=session.getAttribute("username")%>'
-		
+	//username = '<% out.print(session.getAttribute("username"))%>'
+	//username = '<%= session.getAttribute("username") %>'
+	//var username = '<%= Session["username"] %>';
+	username = getUsername();
+
 	return !(username == null || username == "")
 }
 
@@ -289,7 +334,7 @@ function pruefeLogin(){
 
 	if(!benutzerIstAngemeldet()){
 		//alert("fdas");
-		window.location.href="index.jsp";
+		window.location.href="login.jsp";
 	}
 }
 

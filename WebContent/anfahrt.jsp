@@ -32,8 +32,6 @@
             		    updateWarenkorbGUI();
             		  //}
             		  
-            		  //login checken
-            		  pruefeLogin();
 
             		});
             	

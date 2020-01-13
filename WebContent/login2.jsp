@@ -30,7 +30,7 @@
 
             		if(benutzerIstAngemeldet()){
             			//alert("fdas");
-            			window.location.href="fahrraeder.jsp";
+            			window.location.href="index.jsp";
             		}
             		  
             	});
