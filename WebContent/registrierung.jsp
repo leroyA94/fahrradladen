@@ -33,10 +33,13 @@
 
             		if(benutzerIstAngemeldet()){
             			//alert("fdas");
-            			window.location.href="start.jsp";
+            			window.location.href="index.jsp";
             		}
+            		
+            		updateWarenkorbGUI();
             		  
             	});
+            	
 
             	
             	
