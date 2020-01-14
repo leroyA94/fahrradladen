@@ -21,7 +21,8 @@
 		<script>
 
 		   	function benutzerIstAngemeldet(){
-		   		username = '<%=session.getAttribute("username")%>'
+		   		username = '<%=session.getAttribute("username")%>';
+		   		
 		       		
 		      		return !(username == null || username == "")
 		   	}
