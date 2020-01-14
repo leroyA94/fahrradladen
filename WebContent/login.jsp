@@ -20,13 +20,6 @@
 
 		<script>
 
-		   	function benutzerIstAngemeldet(){
-		   		username = '<%=session.getAttribute("username")%>';
-		   		
-		       		
-		      		return !(username == null || $.trim(username) == "");
-		      		
-		   	}
         
             $("document").ready(function()
             {
