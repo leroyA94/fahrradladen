@@ -13,7 +13,7 @@ INSERT INTO Fahrradladen.Fahrraeder (Marke, Groesse, Preis, aufLager, bezeichnun
 
 
 
-CREATE TABLE Fahrradladen.Benutzer (Id int NOT NULL AUTO_INCREMENT, Benutzername varchar(15) NOT NULL, Name varchar(255) NOT NULL, Vorname varchar(255) NOT NULL, Passwort varchar(30) NOT NULL, PRIMARY KEY (Id), UNIQUE(Benutzername));
+CREATE TABLE Fahrradladen.Benutzer (Id int NOT NULL AUTO_INCREMENT, Benutzername varchar(255) NOT NULL, Name varchar(255) NOT NULL, Vorname varchar(255) NOT NULL, Passwort varchar(30) NOT NULL, PRIMARY KEY (Id), UNIQUE(Benutzername));
 
 INSERT INTO Fahrradladen.Benutzer (Benutzername, Name, Vorname , Passwort) VALUES ("t", "TestName", "TestVorname","test");
 INSERT INTO Fahrradladen.Benutzer (Benutzername, Name, Vorname , Passwort) VALUES ("linux", "Torvalds", "Linus","tl");

@@ -21,7 +21,7 @@
 		<script>
 
 		   	function benutzerIstAngemeldet(){
-		   		username = '<%=session.getAttribute("username")%>'
+		   		username = '<%=session.getAttribute("username")%>';
 		       		
 		      		return !(username == null || username == "")
 		   	}
@@ -33,7 +33,7 @@
 
             		if(benutzerIstAngemeldet()){
             			//alert("fdas");
-            			window.location.href="index.jsp";
+            			window.location.href="login.jsp";
             		}
             		
             		updateWarenkorbGUI();
