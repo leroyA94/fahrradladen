@@ -327,7 +327,7 @@ function benutzerIstAngemeldet(){
 	//var username = '<%= Session["username"] %>';
 	username = getUsername();
 
-	return !(username == null || username == "")
+	return !(username == null || $.trim(username) == "")
 }
 
 function pruefeLogin(){
